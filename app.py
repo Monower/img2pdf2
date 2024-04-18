@@ -43,7 +43,7 @@ def convert():
             return redirect(url_for('download_file', filename='output.pdf'))
     return render_template("index.html")
 
-@app.route('/tmp/<filename>')
+@app.route('/uploads/<filename>')
 def download_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename, as_attachment=True)
