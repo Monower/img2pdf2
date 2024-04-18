@@ -3,7 +3,7 @@ from PIL import Image
 import os
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'uploads/'
+app.config['UPLOAD_FOLDER'] = 'tmp/'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -43,7 +43,7 @@ def convert():
             return redirect(url_for('download_file', filename='output.pdf'))
     return render_template("index.html")
 
-@app.route('/uploads/<filename>')
+@app.route('/tmp/<filename>')
 def download_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename, as_attachment=True)
