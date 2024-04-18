@@ -20,3 +20,10 @@ This is a small tool to convert images to PDF.
 
 **Server:** Python, Flask
 
+
+## API end point
+- the end point is `/api/upload`
+- the method is `POST`
+- accepts an array of files
+- returns a url to download the pdf
+
