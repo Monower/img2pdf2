@@ -14,8 +14,6 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 
-
-
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
@@ -25,9 +23,9 @@ def convert():
     if request.method == 'POST':
         # Check if the post request has the file part
         if 'files[]' not in request.files:
-            return redirect(request.url)
+            return redirect('/')
         files = request.files.getlist('files[]')
-        
+
         # List to hold uploaded images
         images = []
         for file in files:
@@ -35,15 +33,15 @@ def convert():
                 filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
                 file.save(filename)
                 images.append(Image.open(filename))
-        
+
         # Convert the list of images to PDF
         if images:
             pdf_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'output.pdf')
             images[0].save(pdf_filename, save_all=True, append_images=images[1:])
-            
+
             # Redirect to the download page
             return redirect(url_for('download_file', filename='output.pdf'))
-    return render_template('upload.html')
+    return render_template("index.html")
 
 @app.route('/uploads/<filename>')
 def download_file(filename):
